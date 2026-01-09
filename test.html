@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Birthday Invitation</title>
+  <style>
+    :root{
+      --bg1:#0f1020;
+      --bg2:#1b1d3a;
+      --card:#ffffff12;
+      --text:#f6f7ff;
+      --muted:#c7c9ff;
+      --accent:#ff5ea8;
+      --accent2:#7cf7ff;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      background:
+        radial-gradient(1200px 600px at 20% 10%, #ff5ea833, transparent 55%),
+        radial-gradient(900px 500px at 90% 30%, #7cf7ff33, transparent 60%),
+        linear-gradient(160deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+    }
+    .wrap{
+      width:min(920px, 100%);
+      display:grid;
+      gap:18px;
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+    @media (max-width: 860px){
+      .wrap{grid-template-columns: 1fr;}
+    }
+    .card{
+      background:var(--card);
+      border:1px solid #ffffff1f;
+      backdrop-filter: blur(10px);
+      border-radius:24px;
+      padding:22px;
+      box-shadow: 0 20px 60px #00000055;
+      position:relative;
+      overflow:hidden;
+    }
+    .badge{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid #ffffff2b;
+      background:#ffffff10;
+      font-size:14px;
+      color:var(--muted);
+    }
+    .dot{
+      width:10px;height:10px;border-radius:999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+    h1{
+      margin:14px 0 8px;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height:1.1;
+    }
+    .sub{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:16px;
+      line-height:1.6;
+    }
+    .name{
+      display:inline-block;
+      padding:4px 10px;
+      border-radius:12px;
+      background:linear-gradient(90deg, #ff5ea833, #7cf7ff33);
+      border:1px solid #ffffff24;
+    }
+    .details{
+      display:grid;
+      gap:10px;
+      margin-top:12px;
+    }
+    .row{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid #ffffff20;
+      background:#00000014;
+    }
+    .ico{width:22px; flex:0 0 22px; opacity:.95}
+    .label{font-weight:600}
+    .value{color:var(--muted)}
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:16px;
+    }
+    button, a.btn{
+      cursor:pointer;
+      border:none;
+      border-radius:16px;
+      padding:12px 14px;
+      font-weight:650;
+      color:var(--text);
+      background: linear-gradient(90deg, var(--accent), #ff8dc7);
+      box-shadow:0 12px 24px #ff5ea83b;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+    }
+    button.secondary, a.btn.secondary{
+      background:#ffffff12;
+      border:1px solid #ffffff22;
+      box-shadow:none;
+      color:var(--text);
+    }
+    .mini{
+      color:var(--muted);
+      font-size:13px;
+      margin-top:10px;
+      line-height:1.5;
+    }
+    .side h2{
+      margin:0 0 10px;
+      font-size:22px;
+    }
+    .side p{
+      margin:0 0 14px;
+      color:var(--muted);
+      line-height:1.6;
+    }
+    .input{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    input{
+      flex:1 1 220px;
+      background:#0b0c1a;
+      color:var(--text);
+      border:1px solid #ffffff22;
+      border-radius:16px;
+      padding:12px 14px;
+      outline:none;
+    }
+    .linkbox{
+      margin-top:12px;
+      padding:12px 14px;
+      background:#00000020;
+      border:1px solid #ffffff22;
+      border-radius:16px;
+      color:var(--muted);
+      word-break:break-all;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size:13px;
+    }
+    .confetti{
+      position:absolute;
+      inset:-40px;
+      background:
+        radial-gradient(6px 6px at 10% 20%, #ff5ea8 30%, transparent 31%),
+        radial-gradient(6px 6px at 40% 10%, #7cf7ff 30%, transparent 31%),
+        radial-gradient(6px 6px at 70% 30%, #ffd56a 30%, transparent 31%),
+        radial-gradient(6px 6px at 85% 15%, #a78bfa 30%, transparent 31%),
+        radial-gradient(6px 6px at 20% 70%, #34d399 30%, transparent 31%),
+        radial-gradient(6px 6px at 60% 85%, #ff5ea8 30%, transparent 31%),
+        radial-gradient(6px 6px at 90% 70%, #7cf7ff 30%, transparent 31%);
+      opacity:.35;
+      filter: blur(.2px);
+      pointer-events:none;
+      transform: rotate(-6deg);
+    }
+    .sr{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <div class="confetti"></div>
+
+      <div class="badge"><span class="dot"></span> You’re invited!</div>
+
+      <h1>
+        Hey <span id="guestName" class="name">Friend</span> 🎉<br/>
+        Come celebrate my birthday!
+      </h1>
+
+      <p class="sub" id="subtitle">
+        I’d love for you to join us for food, fun, and cake. Save the date below 👇
+      </p>
+
+      <div class="details">
+        <div class="row">
+          <div class="ico">📅</div>
+          <div>
+            <div class="label">Date</div>
+            <div class="value" id="invDate">Sunday, 25 Feb 2026</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="ico">⏰</div>
+          <div>
+            <div class="label">Time</div>
+            <div class="value" id="invTime">6:30 PM onwards</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="ico">📍</div>
+          <div>
+            <div class="label">Venue</div>
+            <div class="value" id="invVenue">Sky Lounge, MG Road, Bengaluru</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="ico">🎁</div>
+          <div>
+            <div class="label">Dress code</div>
+            <div class="value" id="invDress">Casual / Party</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="copyBtn" class="secondary" type="button">📋 Copy invite link</button>
+        <a id="whatsBtn" class="btn" href="#" target="_blank" rel="noopener">💬 Share on WhatsApp</a>
+        <a id="mapsBtn" class="btn secondary" href="#" target="_blank" rel="noopener">🗺️ Open in Google Maps</a>
+      </div>
+
+      <p class="mini">
+        Tip: change name in URL like <b>?name=Rahul</b> or <b>?name=Marish%20R</b>.
+      </p>
+
+      <span class="sr" id="liveStatus" aria-live="polite"></span>
+    </section>
+
+    <aside class="card side">
+      <h2>Generate a personalized link</h2>
+      <p>
+        Type someone’s name and create a link you can send.
+      </p>
+
+      <div class="input">
+        <input id="nameInput" type="text" placeholder="e.g. Rahul Sharma" />
+        <button id="genBtn" type="button">🔗 Generate</button>
+      </div>
+
+      <div class="linkbox" id="genLink">Your personalized link will appear here.</div>
+
+      <p class="mini">
+        You can also customize the date/time/venue inside the HTML file (search for <b>invDate</b>, <b>invTime</b>, <b>invVenue</b>).
+      </p>
+    </aside>
+  </main>
+
+  <script>
+    // --- Helpers
+    function getParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+
+    function safeName(raw) {
+      if (!raw) return null;
+      // Basic cleanup to avoid ugly inputs
+      const cleaned = raw.trim().replace(/\s+/g, " ");
+      if (!cleaned) return null;
+      // Limit length to keep UI nice
+      return cleaned.slice(0, 40);
+    }
+
+    function buildLinkForName(name) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("name", name);
+      return url.toString();
+    }
+
+    // --- Set guest name from ?name=
+    const guestNameEl = document.getElementById("guestName");
+    const liveStatus = document.getElementById("liveStatus");
+    const nameFromUrl = safeName(getParam("name"));
+
+    if (nameFromUrl) {
+      guestNameEl.textContent = nameFromUrl;
+      document.title = `Birthday Invite for ${nameFromUrl}`;
+    }
+
+    // --- Maps button (change venue text or put your direct maps link/query)
+    const venueText = document.getElementById("invVenue").textContent;
+    const mapsBtn = document.getElementById("mapsBtn");
+    mapsBtn.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(venueText);
+
+    // --- Copy invite link (current page URL)
+    const copyBtn = document.getElementById("copyBtn");
+    copyBtn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        liveStatus.textContent = "Link copied!";
+        copyBtn.textContent = "✅ Copied!";
+        setTimeout(() => (copyBtn.textContent = "📋 Copy invite link"), 1200);
+      } catch (e) {
+        alert("Copy failed. Please manually copy the URL from the address bar.");
+      }
+    });
+
+    // --- WhatsApp share
+    const whatsBtn = document.getElementById("whatsBtn");
+    function updateWhatsAppLink() {
+      const guest = guestNameEl.textContent || "Friend";
+      const msg =
+        `Hi ${guest}! 🎉 You’re invited to my birthday!\n\n` +
+        `Date: ${document.getElementById("invDate").textContent}\n` +
+        `Time: ${document.getElementById("invTime").textContent}\n` +
+        `Venue: ${venueText}\n\n` +
+        `Invite link: ${window.location.href}`;
+      whatsBtn.href = "https://wa.me/?text=" + encodeURIComponent(msg);
+    }
+    updateWhatsAppLink();
+
+    // --- Generator
+    const nameInput = document.getElementById("nameInput");
+    const genBtn = document.getElementById("genBtn");
+    const genLink = document.getElementById("genLink");
+
+    genBtn.addEventListener("click", () => {
+      const n = safeName(nameInput.value);
+      if (!n) {
+        genLink.textContent = "Please type a name first.";
+        return;
+      }
+      const link = buildLinkForName(n);
+      genLink.textContent = link;
+    });
+  </script>
+</body>
+</html>
